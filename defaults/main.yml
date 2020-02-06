@@ -1,0 +1,6 @@
+---
+# defaults file for loumaris.user
+sudo: true
+shell: "/bin/bash"
+state: present
+group: users

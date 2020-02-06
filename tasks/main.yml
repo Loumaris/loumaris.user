@@ -1,0 +1,27 @@
+---
+# tasks file for loumaris.user
+- name: "make user {{ username }} {{ state }}"
+  when: password is not defined
+  user:
+    name: "{{ username }}"
+    comment: "{{ fullname }}"
+    group: "{{ group }}"
+    shell: "{{ shell }}"
+    state: "{{ state }}"
+
+- name: "make user {{ username }} {{ state }}"
+  when: password is defined
+  user:
+    name: "{{ username }}"
+    comment: "{{ fullname }}"
+    group: "{{ group }}"
+    shell: "{{ shell }}"
+    state: "{{ state }}"
+    password: "{{ password | password_hash('sha512') }}"
+
+# FIXME need to be removed if user is absent
+- name: Add {{ username }} to the sudoers
+  when: sudo|bool == true
+  copy:
+    dest: "/etc/sudoers.d/{{ username }}"
+    content: "{{ username }}  ALL=(ALL)  NOPASSWD: ALL"
