@@ -4,3 +4,5 @@ sudo: true
 shell: "/bin/bash"
 state: present
 group: users
+username: deploy
+fullname: "{{ username }}"
